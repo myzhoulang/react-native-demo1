@@ -8,22 +8,41 @@ import {
   StyleSheet,
   Text,
   View,
+  FlatList
 } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 import Header from './Header';
+import ListItem from '../../components/ListItem';
+
+const data = [
+  {key:'a'},
+  {key:'b'},
+  {key:'c'},
+  {key:'d'},
+  {key:'e'},
+  {key:'f'},
+  {key:'g'},
+  {key:'h'},
+]
 
 class HomeScreen extends Component {
   render(){
     return (
-      <Text>首页ssss</Text>
+      <View>
+        <FlatList
+          data={data}
+          renderItem={({item}) => (<ListItem/>)}
+        />
+      </View>
     )
   }
 }
 
-class SettingsScreen extends Component {
+class VideoScreen extends Component {
   render(){
     return (
-      <Text>首页--set'ti'ne</Text>
+      <Text>Video</Text>
     )
   }
 }
@@ -47,33 +66,57 @@ class MyScreen extends Component {
 const TabNavigator = createBottomTabNavigator({
   Home: {
     screen:HomeScreen,
-    navigationOptions: ({navigation}) => ({
-      title: navigation.state.routeName,
-      headerStyle: {
-        backgroundColor: '#f4511e',
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold',
-      },
+    navigationOptions:()=>({
+      title: '首页'
     })
   },
-  video: {
-    screen: SettingsScreen,
+  Video: {
+    screen: VideoScreen,
+    navigationOptions:()=>({
+      title: '视频'
+    })
   },
 
   Speak: {
-    screen: SpeakScreen
+    screen: SpeakScreen,
+    navigationOptions:()=>({
+      title: '讲讲'
+    })
   },
 
   My: {
-    screen: MyScreen
+    screen: MyScreen,
+    navigationOptions:()=>({
+      title: '我的'
+    })
   }
 }, {
   initialRouteName: 'Home',
   tabBarPosition: 'bottom',
   headerMode:'screen',
+  tabBarOptions:{
+    activeTintColor: '#d60000',
+    inactiveTintColor: '#aaa',
+    labelStyle: {
+      fontSize: 10
+    },
+    inactiveBackgroundColor: '#fff'
+  },
+  defaultNavigationOptions: ({ navigation }) => ({
+    tabBarIcon: ({ focused, horizontal, tintColor }) => {
+      const { routeName } = navigation.state;
+      let IconComponent = FeatherIcon;
+      const tabIConMap = {
+        Home: 'home',
+        Video: 'play',
+        Speak: 'send',
+        My: 'user'
+      }
+      const iconName = tabIConMap[routeName];
+      // You can return any component that you like here!
+      return <IconComponent name={iconName} size={18} color={tintColor} />;
+    },
+  })
 });
-
 
 export default TabNavigator;
