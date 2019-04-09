@@ -28,7 +28,8 @@ export default class LayoutHeader extends Component {
         centerComponent={InputComponent}
         rightComponent={
         <View style={{color:'#fff', alignItems:'center'}}>
-          <Icon name='videocamera' color='#fff' size={20}/><Text style={{color: '#fff', fontSize: 14}}>直播</Text>
+          <Icon name='videocamera' color='#fff' size={20}/>
+          <Text style={{color: '#fff', fontSize: 14}}>直播</Text>
         </View>}
       />
     )
